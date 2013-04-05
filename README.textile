@@ -42,6 +42,7 @@ Options:
   --servers=SERVERS    comma separated list of host:port (default localhost:2181)
   --config=CONFIGFILE  zookeeper configuration file to lookup servers from
   --timeout=TIMEOUT    session timeout in milliseconds (default 5000)
+  -l, --logfile        path to write log file to (default cli_log_$PID.txt)
   -v, --verbose        verbose output, include more detail
   -q, --quiet          quiet output, basically just success/failure
 </pre>
@@ -58,7 +59,7 @@ PYTHONPATH=lib.linux-i686-2.6 LD_LIBRARY_PATH=lib.linux-i686-2.6 ./zk-smoketest.
 
 On success the last line of output will be "Smoke test successful", otw an exception will be raised.
 
-ZooKeeper client output is written to "cli_log_%d.txt" where %d is the process id of the python process.
+ZooKeeper client output is written to "cli_log_%d.txt" (or the supplied filename) where %d is the process id of the python process.
 
 
 h3. Example
@@ -116,6 +117,7 @@ Options:
                         it!!!
   --synchronous         by default asynchronous ZK api is used, this forces
                         synchronous calls
+  -l, --logfile         path to write log file to (default cli_log_$PID.txt)
   -v, --verbose         verbose output, include more detail
   -q, --quiet           quiet output, basically just success/failure
 </pre>
@@ -130,7 +132,7 @@ PYTHONPATH=lib.linux-i686-2.6 LD_LIBRARY_PATH=lib.linux-i686-2.6 ./zk-latencies.
 
 On success the last line of output will be "Latency test complete", otw an exception will be raised.
 
-ZooKeeper client output is written to "cli_log_%d.txt" where %d is the process id of the python process.
+ZooKeeper client output is written to "cli_log_%d.txt" (or the supplied filename) where %d is the process id of the python process.
 
 
 h3. Example

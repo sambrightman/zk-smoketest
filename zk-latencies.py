@@ -32,15 +32,15 @@ parser.add_option("", "--config",
                   dest="configfile", default=None,
                   help="zookeeper configuration file to lookup cluster from")
 parser.add_option("", "--timeout", dest="timeout", type="int",
-                  default=5000, help="session timeout in milliseconds (default 5000)")
+                  default=5000, help="session timeout in milliseconds (default %default)")
 parser.add_option("", "--root_znode", dest="root_znode",
-                  default="/zk-latencies", help="root for the test, will be created as part of test (default /zk-latencies)")
+                  default="/zk-latencies", help="root for the test, will be created as part of test (default %default)")
 parser.add_option("", "--znode_size", dest="znode_size", type="int",
-                  default=25, help="data size when creating/setting znodes (default 25)")
+                  default=25, help="data size when creating/setting znodes (default %default)")
 parser.add_option("", "--znode_count", dest="znode_count", default=10000, type="int",
-                  help="the number of znodes to operate on in each performance section (default 10000)")
+                  help="the number of znodes to operate on in each performance section (default %default)")
 parser.add_option("", "--watch_multiple", dest="watch_multiple", default=1, type="int",
-                  help="number of watches to put on each znode (default 1)")
+                  help="number of watches to put on each znode (default %default)")
 
 parser.add_option("", "--force",
                   action="store_true", dest="force", default=False,
@@ -50,6 +50,9 @@ parser.add_option("", "--synchronous",
                   action="store_true", dest="synchronous", default=False,
                   help="by default asynchronous ZK api is used, this forces synchronous calls")
 
+parser.add_option("-l", "--logfile",
+                  dest="logfile", default="cli_log_%d.txt" % (os.getpid()),
+                  help="path to write log file to (default %default)")
 parser.add_option("-v", "--verbose",
                   action="store_true", dest="verbose", default=False,
                   help="verbose output, include more detail")
@@ -61,7 +64,7 @@ parser.add_option("-q", "--quiet",
 
 zkclient.options = options
 
-zookeeper.set_log_stream(open("cli_log_%d.txt" % (os.getpid()),"w"))
+zookeeper.set_log_stream(open(options.logfile, "w"))
 
 class SmokeError(Exception):
     def __init__(self, value):

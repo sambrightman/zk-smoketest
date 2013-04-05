@@ -25,12 +25,15 @@ from zkclient import ZKClient, SequentialCountingWatcher, zookeeper
 usage = "usage: %prog [options]"
 parser = OptionParser(usage=usage)
 parser.add_option("", "--servers", dest="servers",
-                  default="localhost:2181", help="comma separated list of host:port (default localhost:2181)")
+                  default="localhost:2181", help="comma separated list of host:port (default %default)")
 parser.add_option("", "--config",
                   dest="configfile", default=None,
                   help="zookeeper configuration file to lookup servers from")
 parser.add_option("", "--timeout", dest="timeout", type="int",
-                  default=5000, help="session timeout in milliseconds (default 5000)")
+                  default=5000, help="session timeout in milliseconds (default %default)")
+parser.add_option("-l", "--logfile",
+                  dest="logfile", default="cli_log_%d.txt" % (os.getpid()),
+                  help="path to write log file to (default %default)")
 parser.add_option("-v", "--verbose",
                   action="store_true", dest="verbose", default=False,
                   help="verbose output, include more detail")
@@ -42,7 +45,7 @@ parser.add_option("-q", "--quiet",
 
 zkclient.options = options
 
-zookeeper.set_log_stream(open("cli_log_%d.txt" % (os.getpid()),"w"))
+zookeeper.set_log_stream(open(options.logfile, "w"))
 
 class SmokeError(Exception):
     def __init__(self, value):
